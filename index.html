@@ -158,14 +158,19 @@ nav{background:var(--white);position:sticky;top:0;z-index:300;border-bottom:2px 
 .fac-sec .sey{color:var(--gold2)}.fac-sec .sey::before{background:var(--gold2)}
 .fac-sec .ssub{color:rgba(255,255,255,.4)}
 .fac-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;position:relative;z-index:1}
-.fc{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);padding:2rem;transition:all .3s;position:relative;overflow:hidden}
-.fc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold2));transform:scaleX(0);transform-origin:left;transition:transform .3s}
-.fc:hover{background:rgba(255,255,255,.07);border-color:rgba(200,151,31,.2);transform:translateY(-4px)}
+.fc{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);padding:0;transition:all .3s;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.fc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold2));transform:scaleX(0);transform-origin:left;transition:transform .3s;z-index:3}
+.fc:hover{border-color:rgba(200,151,31,.35);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.4)}
 .fc:hover::after{transform:scaleX(1)}
-.fc-num{font-family:'Playfair Display',serif;font-size:2.8rem;color:rgba(200,151,31,.1);font-weight:700;line-height:1;margin-bottom:-10px}
-.fc-ic{width:54px;height:54px;border-radius:14px;background:rgba(200,151,31,.1);display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:1rem;border:1px solid rgba(200,151,31,.15)}
+.fc-img-wrap{position:relative;height:160px;overflow:hidden;border-radius:var(--r2) var(--r2) 0 0;flex-shrink:0}
+.fc-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s;filter:brightness(.75)}
+.fc:hover .fc-img-wrap img{transform:scale(1.08);filter:brightness(.6)}
+.fc-img-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(9,24,64,.85) 100%)}
+.fc-content{padding:1.5rem 1.75rem 1.75rem;flex:1;display:flex;flex-direction:column}
+.fc-num{font-family:'Playfair Display',serif;font-size:2.4rem;color:rgba(200,151,31,.12);font-weight:700;line-height:1;margin-bottom:-8px}
+.fc-ic{width:48px;height:48px;border-radius:12px;background:rgba(200,151,31,.12);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:.85rem;border:1px solid rgba(200,151,31,.2)}
 .fc h3{font-family:'Noto Serif Devanagari',serif;color:#fff;font-size:16px;font-weight:700;margin-bottom:8px}
-.fc p{font-family:'Noto Serif Devanagari',serif;color:rgba(255,255,255,.42);font-size:13.5px;line-height:1.7}
+.fc p{font-family:'Noto Serif Devanagari',serif;color:rgba(255,255,255,.5);font-size:13px;line-height:1.7;flex:1}
 
 /* ── NOTICE BOARD ── */
 .nb-layout{display:grid;grid-template-columns:2fr 1fr;gap:2rem}
@@ -344,8 +349,34 @@ footer{background:#040D1A}
 .pw-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:16px;color:var(--muted)}
 .login-error{font-size:12px;color:#DC2626;margin-top:-8px;margin-bottom:.5rem;display:none}
 
-/* ── REVEAL ── */
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}
+/* ── LOCATION SECTION ── */
+.loc-section{background:var(--light);padding:5rem 2rem}
+.loc-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:2.5rem;align-items:start}
+.loc-info{display:flex;flex-direction:column;gap:1.25rem}
+.loc-card{background:var(--white);border-radius:var(--r2);border:1px solid var(--border);padding:1.5rem;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.loc-card-h{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+.loc-card-h .loc-ic{width:40px;height:40px;border-radius:10px;background:var(--gold-pale);display:flex;align-items:center;justify-content:center;font-size:20px;border:1px solid rgba(200,151,31,.2);flex-shrink:0}
+.loc-card-h h4{font-family:'Noto Serif Devanagari',serif;font-size:15px;color:var(--navy);font-weight:700}
+.loc-detail-row{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed var(--border);font-size:13.5px;align-items:flex-start}
+.loc-detail-row:last-child{border-bottom:none}
+.loc-detail-label{color:var(--muted);min-width:90px;font-family:'Noto Serif Devanagari',serif;flex-shrink:0}
+.loc-detail-val{color:var(--navy);font-weight:500;font-family:'Noto Serif Devanagari',serif;flex:1}
+.map-wrap{border-radius:var(--r2);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.1);border:1px solid var(--border);position:relative;height:380px}
+.map-wrap iframe{width:100%;height:100%;border:none;display:block;opacity:0;transition:opacity .4s}
+.map-fallback{position:absolute;inset:0;z-index:1;border-radius:var(--r2);overflow:hidden}
+.map-edit-btn{position:absolute;top:10px;right:10px;background:var(--navy);color:#fff;border:none;padding:7px 14px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;display:none;font-family:'Inter',sans-serif;z-index:3;transition:all .2s}
+.map-edit-btn:hover{background:var(--gold);color:var(--navy)}
+.map-edit-btn.admin-show{display:flex;align-items:center;gap:5px}
+.loc-directions-btn{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;padding:11px 22px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:600;transition:all .2s;font-family:'Noto Serif Devanagari',serif;margin-top:.75rem}
+.loc-directions-btn:hover{background:var(--gold);color:var(--navy)}
+/* timing edit btn */
+.timing-edit-btn{background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.25);color:var(--admin);font-size:10.5px;padding:3px 10px;border-radius:5px;cursor:pointer;display:none;font-weight:600;font-family:'Inter',sans-serif;transition:all .2s}
+.timing-edit-btn:hover{background:rgba(124,58,237,.2)}
+.timing-edit-btn.admin-show{display:inline-flex;align-items:center;gap:4px}
+/* location/timing modal wider */
+.modal-box.wide{max-width:560px}
+@media(max-width:1024px){.loc-grid{grid-template-columns:1fr}}
+@media(max-width:768px){.map-wrap iframe{height:260px}.loc-section{padding:3.5rem 1.5rem}}
 .reveal.vis{opacity:1;transform:translateY(0)}
 
 /* ── MOBILE ── */
@@ -378,6 +409,8 @@ footer{background:#040D1A}
   </div>
   <div class="admin-bar-right">
     <button class="ab-btn" onclick="openNoticeModal()">➕ Notice जोड़ें</button>
+    <button class="ab-btn" onclick="openTimingModal()">🕐 Timing Edit</button>
+    <button class="ab-btn" onclick="openHolidayModal()">🎉 Holidays Edit</button>
     <button class="ab-btn" onclick="openSMModal()">📱 Social Media</button>
     <button class="ab-btn danger" onclick="adminLogout()">🔒 Logout</button>
   </div>
@@ -408,7 +441,7 @@ footer{background:#040D1A}
     <div class="tb-left">
       <span class="tb-item">📍 सहजनी पूरे गिरवर</span>
       <a class="tb-item" href="tel:8787035980">📞 8787035980 / 9335399235</a>
-      <a class="tb-item" href="mailto:r.spublicschool230202@gmail.com">✉️ r.spublicschool230202@gmail.com</a>
+      <a class="tb-item" href="/cdn-cgi/l/email-protection#03712d707376616f6a6070606b6c6c6f31303331333143646e626a6f2d606c6e">✉️ <span class="__cf_email__" data-cfemail="6d1f431e1d180f01040e1e0e050202015f5e5d5f5d5f2d0a000c0401430e0200">[email&#160;protected]</span></a>
     </div>
     <div class="tb-right">
       <span class="tb-label">Follow Us</span>
@@ -558,12 +591,61 @@ footer{background:#040D1A}
       <div class="ssub">आधुनिक सुविधाओं से युक्त हमारे विद्यालय में बच्चों के सम्पूर्ण विकास का पूरा ध्यान रखा गया है।</div>
     </div>
     <div class="fac-grid reveal">
-      <div class="fc"><div class="fc-num">01</div><div class="fc-ic">💻</div><h3>Computer Lab</h3><p>आधुनिक कम्प्यूटरों से युक्त प्रयोगशाला — विद्यार्थी यहाँ डिजिटल कौशल सीखते हैं और भविष्य के लिए तैयार होते हैं।</p></div>
-      <div class="fc"><div class="fc-num">02</div><div class="fc-ic">📺</div><h3>Smart Classroom</h3><p>टी.वी. और व्हाइटबोर्ड से युक्त आधुनिक कक्षा — पढ़ाई अब और अधिक आसान, रोचक और प्रभावशाली हो गई है।</p></div>
-      <div class="fc"><div class="fc-num">03</div><div class="fc-ic">🔬</div><h3>Science Activities</h3><p>विज्ञान गतिविधियाँ और परियोजनाएँ — विद्यार्थी केवल पढ़ते नहीं, करके सीखते हैं और ज्ञान को व्यावहारिक रूप देते हैं।</p></div>
-      <div class="fc"><div class="fc-num">04</div><div class="fc-ic">⚽</div><h3>Sports Ground</h3><p>बाहरी खेलों के लिए खुला मैदान — क्रिकेट, फुटबॉल और अन्य खेल। खेल से भी बच्चे अनुशासन और टीमवर्क सीखते हैं।</p></div>
-      <div class="fc"><div class="fc-num">05</div><div class="fc-ic">🚻</div><h3>Clean Washrooms</h3><p>साफ और सुरक्षित शौचालय की सुविधा — स्वच्छ भारत अभियान के अनुकूल हमारे विद्यालय का संकल्प।</p></div>
-      <div class="fc"><div class="fc-num">06</div><div class="fc-ic">🌬️</div><h3>Ventilated Classrooms</h3><p>पंखे से युक्त हवादार कक्षाएँ — गर्मी में भी बच्चे आराम से बैठकर ध्यान लगाकर पढ़ सकें, यही हमारी प्राथमिकता है।</p></div>
+
+      <!-- 01 Computer Lab -->
+      <div class="fc">
+        <div class="fc-img-wrap"><img src="https://images.unsplash.com/photo-1588702547919-26089e690ecc?w=600&q=75&auto=format" alt="Computer Lab" loading="lazy"/></div>
+        <div class="fc-content">
+                    <h3>Computer Lab</h3>
+          <p>आधुनिक कम्प्यूटरों से युक्त प्रयोगशाला — विद्यार्थी यहाँ डिजिटल कौशल सीखते हैं और भविष्य के लिए तैयार होते हैं।</p>
+        </div>
+      </div>
+
+      <!-- 02 Smart Classroom -->
+      <div class="fc">
+        <div class="fc-img-wrap"><img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&q=75&auto=format" alt="Smart Classroom" loading="lazy"/></div>
+        <div class="fc-content">
+                    <h3>Smart Classroom</h3>
+          <p>टी.वी. और व्हाइटबोर्ड से युक्त आधुनिक कक्षा — पढ़ाई अब और अधिक आसान, रोचक और प्रभावशाली हो गई है।</p>
+        </div>
+      </div>
+
+      <!-- 03 Science Activities -->
+      <div class="fc">
+        <div class="fc-img-wrap"><img src="https://images.unsplash.com/photo-1532094349884-543559a8e774?w=600&q=75&auto=format" alt="Science Activities" loading="lazy"/></div>
+        <div class="fc-content">
+                    <h3>Science Activities</h3>
+          <p>विज्ञान गतिविधियाँ और परियोजनाएँ — विद्यार्थी केवल पढ़ते नहीं, करके सीखते हैं और ज्ञान को व्यावहारिक रूप देते हैं।</p>
+        </div>
+      </div>
+
+      <!-- 04 Sports Ground -->
+      <div class="fc">
+        <div class="fc-img-wrap"><img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&q=75&auto=format" alt="Sports Ground" loading="lazy"/></div>
+        <div class="fc-content">
+                    <h3>Sports Ground</h3>
+          <p>बाहरी खेलों के लिए खुला मैदान — क्रिकेट, फुटबॉल और अन्य खेल। खेल से भी बच्चे अनुशासन और टीमवर्क सीखते हैं।</p>
+        </div>
+      </div>
+
+      <!-- 05 Clean Washrooms -->
+      <div class="fc">
+        <div class="fc-img-wrap"><img src="https://images.unsplash.com/photo-1541123437800-1bb1317badc2?w=600&q=75&auto=format" alt="Clean Washrooms" loading="lazy"/></div>
+        <div class="fc-content">
+                    <h3>Clean Washrooms</h3>
+          <p>साफ और सुरक्षित शौचालय की सुविधा — स्वच्छ भारत अभियान के अनुकूल हमारे विद्यालय का संकल्प।</p>
+        </div>
+      </div>
+
+      <!-- 06 Ventilated Classrooms -->
+      <div class="fc">
+        <div class="fc-img-wrap"><img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=75&auto=format" alt="Ventilated Classroom" loading="lazy"/></div>
+        <div class="fc-content">
+                    <h3>Ventilated Classrooms</h3>
+          <p>पंखे से युक्त हवादार कक्षाएँ — गर्मी में भी बच्चे आराम से बैठकर ध्यान लगाकर पढ़ सकें, यही हमारी प्राथमिकता है।</p>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -587,20 +669,23 @@ footer{background:#040D1A}
       </div>
       <div class="nb-sidebar">
         <div class="nb-sc">
-          <div class="nb-sc-h"><span>🕐</span><h4>School Timing</h4></div>
-          <div class="nb-sc-body">
-            <div class="t-row"><span class="t-day">Mon – Fri</span><span class="t-time">8:00 – 2:30</span></div>
-            <div class="t-row"><span class="t-day">Saturday</span><span class="t-time">8:00 – 12:30</span></div>
-            <div class="t-row"><span class="t-day">Sunday</span><span class="t-time" style="color:#DC2626">Holiday</span></div>
+          <div class="nb-sc-h" style="justify-content:space-between">
+            <div style="display:flex;align-items:center;gap:8px"><span>🕐</span><h4>School Timing</h4></div>
+            <button class="timing-edit-btn" id="timingEditBtn" onclick="openTimingModal()">✏️ Edit</button>
+          </div>
+          <div class="nb-sc-body" id="timingBody">
+            <div class="t-row"><span class="t-day">Mon – Fri</span><span class="t-time" id="timing-mf">8:00 – 2:30</span></div>
+            <div class="t-row"><span class="t-day">Saturday</span><span class="t-time" id="timing-sat">8:00 – 12:30</span></div>
+            <div class="t-row"><span class="t-day">Sunday</span><span class="t-time" id="timing-sun" style="color:#DC2626">Holiday</span></div>
           </div>
         </div>
         <div class="nb-sc">
-          <div class="nb-sc-h"><span>🎉</span><h4>Upcoming Holidays</h4></div>
-          <div class="nb-sc-body">
-            <div class="h-row"><span class="h-dt">14 अप्रैल</span><span class="h-nm">डॉ. आम्बेडकर जयन्ती</span></div>
-            <div class="h-row"><span class="h-dt">1 मई</span><span class="h-nm">मजदूर दिवस</span></div>
-            <div class="h-row"><span class="h-dt">23 मई</span><span class="h-nm">बुद्ध पूर्णिमा</span></div>
-            <div class="h-row"><span class="h-dt">जून–जुलाई</span><span class="h-nm">ग्रीष्मकालीन अवकाश</span></div>
+          <div class="nb-sc-h" style="justify-content:space-between">
+            <div style="display:flex;align-items:center;gap:8px"><span>🎉</span><h4>Upcoming Holidays</h4></div>
+            <button class="timing-edit-btn" id="holidayEditBtn" onclick="openHolidayModal()">✏️ Edit</button>
+          </div>
+          <div class="nb-sc-body" id="holidayBody">
+            <!-- rendered by JS -->
           </div>
         </div>
         <div class="call-box">
@@ -648,6 +733,53 @@ footer{background:#040D1A}
   <button class="lb-x" onclick="closeLB()">✕</button>
   <img class="lb-img" id="lbImg" src="" alt=""/>
 </div>
+
+<!-- LOCATION -->
+<section class="loc-section" id="location">
+  <div class="si">
+    <div class="sh reveal">
+      <div class="sey">Location</div>
+      <div class="stitle">हमारा पता — Find Us</div>
+      <div class="ssub">विद्यालय तक पहुँचना बहुत आसान है। नीचे नक्शे पर देखें और Directions लें।</div>
+    </div>
+    <div class="loc-grid reveal">
+      <div class="loc-info">
+        <div class="loc-card">
+          <div class="loc-card-h">
+            <div class="loc-ic">📍</div>
+            <h4>विद्यालय का पूरा पता</h4>
+          </div>
+          <div class="loc-detail-row"><span class="loc-detail-label">नाम</span><span class="loc-detail-val" id="loc-name">आर.एस. पब्लिक स्कूल</span></div>
+          <div class="loc-detail-row"><span class="loc-detail-label">ग्राम</span><span class="loc-detail-val" id="loc-village">सहजनी पूरे गिरवर</span></div>
+          <div class="loc-detail-row"><span class="loc-detail-label">ज़िला</span><span class="loc-detail-val" id="loc-district">सुल्तानपुर, उत्तर प्रदेश</span></div>
+          <div class="loc-detail-row"><span class="loc-detail-label">पिन कोड</span><span class="loc-detail-val" id="loc-pin">228001</span></div>
+          <div style="margin-top:1rem;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+            <a class="loc-directions-btn" id="loc-map-link" href="https://maps.google.com/?q=सहजनी+पूरे+गिरवर+सुल्तानपुर+UP" target="_blank">🗺️ Google Maps पर देखें</a>
+            <button class="timing-edit-btn admin-show" id="locEditBtn" onclick="openLocModal()" style="display:none">✏️ पता Edit करें</button>
+          </div>
+        </div>
+        <div class="loc-card">
+          <div class="loc-card-h">
+            <div class="loc-ic">📞</div>
+            <h4>सम्पर्क करें</h4>
+          </div>
+          <div class="loc-detail-row"><span class="loc-detail-label">फ़ोन 1</span><span class="loc-detail-val"><a href="tel:8787035980" style="color:var(--navy);text-decoration:none;font-weight:600">8787035980</a></span></div>
+          <div class="loc-detail-row"><span class="loc-detail-label">फ़ोन 2</span><span class="loc-detail-val"><a href="tel:9335399235" style="color:var(--navy);text-decoration:none;font-weight:600">9335399235</a></span></div>
+          <div class="loc-detail-row"><span class="loc-detail-label">समय</span><span class="loc-detail-val">सोम–शनि | सुबह 8:00 से</span></div>
+        </div>
+      </div>
+      <div class="map-wrap">
+        <div class="map-fallback" id="mapFallback">
+          <svg viewBox="0 0 560 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block"><rect width="560" height="380" fill="#e8ead8"/><rect x="0" y="0" width="560" height="380" fill="url(#mapbg)"/><defs><pattern id="mapgrid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" fill="none" stroke="#c8cab8" stroke-width="0.5"/></pattern><linearGradient id="mapbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e8ead8"/><stop offset="100%" stop-color="#dde0cc"/></linearGradient></defs><rect width="560" height="380" fill="url(#mapgrid)"/><rect x="60" y="80" width="200" height="8" rx="2" fill="#b8baa8"/><rect x="60" y="100" width="280" height="8" rx="2" fill="#b8baa8"/><rect x="200" y="80" width="8" height="200" rx="2" fill="#b8baa8"/><rect x="60" y="160" width="140" height="8" rx="2" fill="#c8a888" opacity=".8"/><rect x="300" y="120" width="160" height="8" rx="2" fill="#b8baa8"/><rect x="340" y="120" width="8" height="160" rx="2" fill="#b8baa8"/><rect x="100" y="200" width="80" height="50" rx="3" fill="#c8c9b5" stroke="#a8aa98" stroke-width="1"/><rect x="220" y="140" width="60" height="35" rx="3" fill="#c8c9b5" stroke="#a8aa98" stroke-width="1"/><rect x="360" y="160" width="90" height="60" rx="3" fill="#c8c9b5" stroke="#a8aa98" stroke-width="1"/><rect x="120" y="290" width="120" height="40" rx="3" fill="#d8d0b8" stroke="#a8aa98" stroke-width="1"/><circle cx="290" cy="190" r="22" fill="#1a56db" opacity=".9"/><circle cx="290" cy="190" r="16" fill="white"/><circle cx="290" cy="190" r="8" fill="#1a56db"/><line x1="290" y1="168" x2="290" y2="212" stroke="#1a56db" stroke-width="2" opacity=".5"/><line x1="268" y1="190" x2="312" y2="190" stroke="#1a56db" stroke-width="2" opacity=".5"/><rect x="260" y="210" width="60" height="28" rx="5" fill="white" stroke="#ddd" stroke-width="1"/><text x="290" y="228" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#333">R.S. School</text><rect x="20" y="20" width="160" height="40" rx="6" fill="white" opacity=".95" filter="drop-shadow(0 2px 4px rgba(0,0,0,.2))"/><text x="32" y="36" font-size="9" font-family="sans-serif" fill="#666">📍 सहजनी पूरे गिरवर</text><text x="32" y="52" font-size="8" font-family="sans-serif" fill="#999">सुल्तानपुर, उत्तर प्रदेश</text><rect x="380" y="280" width="100" height="30" rx="4" fill="white" opacity=".9"/><text x="387" y="292" font-size="7" font-family="sans-serif" fill="#666">© Google Maps</text><text x="387" y="304" font-size="7" font-family="sans-serif" fill="#999">Map Data</text></svg>
+        </div>
+        <iframe id="mapFrame" src="https://maps.google.com/maps?q=Sahijani+Pure+Girwar+Sultanpur+UP&output=embed&z=14" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="position:absolute;inset:0;width:100%;height:100%;border:none;z-index:2" onload="this.style.opacity=1" onerror="this.style.display='none'"></iframe>
+        <button class="map-edit-btn" id="mapEditBtn" onclick="openLocModal()">✏️ Map बदलें</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
 
 <!-- STAFF -->
 <section class="sw" id="staff">
@@ -748,7 +880,7 @@ footer{background:#040D1A}
       <div class="con-cards">
         <div class="cc"><div class="cc-ic">📍</div><div><div class="cc-lbl">Address</div><div class="cc-val">आर.एस. पब्लिक स्कूल<br>सहजनी पूरे गिरवर</div></div></div>
         <div class="cc"><div class="cc-ic">📞</div><div><div class="cc-lbl">Phone</div><div class="cc-val"><a href="tel:8787035980">8787035980</a><a href="tel:9335399235">9335399235</a></div></div></div>
-        <div class="cc"><div class="cc-ic">✉️</div><div><div class="cc-lbl">Email</div><div class="cc-val"><a href="mailto:r.spublicschool230202@gmail.com">r.spublicschool230202@gmail.com</a></div></div></div>
+        <div class="cc"><div class="cc-ic">✉️</div><div><div class="cc-lbl">Email</div><div class="cc-val"><a href="/cdn-cgi/l/email-protection#b1c39fc2c1c4d3ddd8d2c2d2d9dededd838281838183f1d6dcd0d8dd9fd2dedc"><span class="__cf_email__" data-cfemail="fb89d5888b8e99979298889893949497c9c8cbc9cbc9bb9c969a9297d5989496">[email&#160;protected]</span></a></div></div></div>
         <div class="cc"><div class="cc-ic">🕐</div><div><div class="cc-lbl">School Timing</div><div class="cc-val">Mon – Sat<br><span style="color:var(--gold2);font-weight:700">8:00 AM – 2:30 PM</span></div></div></div>
       </div>
       <div class="con-right">
@@ -788,6 +920,7 @@ footer{background:#040D1A}
           <li><a href="#notices">Notice Board</a></li>
           <li><a href="#gallery">Gallery</a></li>
           <li><a href="#staff">Leadership</a></li>
+          <li><a href="#location">Location</a></li>
           <li><a href="#contact">Contact Us</a></li>
         </ul>
       </div>
@@ -796,7 +929,7 @@ footer{background:#040D1A}
         <ul class="foot-links">
           <li><a href="tel:8787035980">📞 8787035980</a></li>
           <li><a href="tel:9335399235">📞 9335399235</a></li>
-          <li><a href="mailto:r.spublicschool230202@gmail.com">✉️ Send Email</a></li>
+          <li><a href="/cdn-cgi/l/email-protection#d7a5f9a4a7a2b5bbbeb4a4b4bfb8b8bbe5e4e7e5e7e597b0bab6bebbf9b4b8ba">✉️ Send Email</a></li>
           <li><a href="#contact">📍 सहजनी पूरे गिरवर</a></li>
         </ul>
         <div style="margin-top:1rem;padding:1rem;background:rgba(200,151,31,.08);border:1px solid rgba(200,151,31,.15);border-radius:8px;text-align:center">
@@ -810,6 +943,63 @@ footer{background:#040D1A}
     <div class="foot-copy">© 2026 आर.एस. पब्लिक स्कूल, सहजनी पूरे गिरवर &nbsp;|&nbsp; Principal: Sh. Dinesh Kumar Patel &nbsp;|&nbsp; Est. 2019<br>"Future Starts Here — उज्ज्वल भविष्य की शुरुआत"</div>
   </div>
 </footer>
+
+<!-- HOLIDAY MODAL -->
+<div class="modal-ov" id="holidayModal">
+  <div class="modal-box wide" style="max-height:90vh;overflow-y:auto">
+    <h3>🎉 Upcoming Holidays Edit करें</h3>
+    <p>छुट्टियों की सूची अपडेट करें। खाली छोड़ें तो वो row नहीं दिखेगी।</p>
+    <div id="holiday-rows"></div>
+    <button onclick="addHolidayRow()" style="background:none;border:1.5px dashed var(--gold);color:var(--gold);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;width:100%;margin-bottom:1rem">➕ और छुट्टी जोड़ें</button>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeHolidayModal()">Cancel</button>
+      <button class="btn-save" onclick="saveHolidays()">Save ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- TIMING MODAL -->
+<div class="modal-ov" id="timingModal">
+  <div class="modal-box wide">
+    <h3>🕐 School Timing Edit करें</h3>
+    <p>नया समय दर्ज करें — यह Notice Board पर दिखेगा।</p>
+    <label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">सोमवार – शुक्रवार</label>
+    <input class="modal-input" type="text" id="t-mf" placeholder="जैसे: 8:00 – 2:30"/>
+    <label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">शनिवार</label>
+    <input class="modal-input" type="text" id="t-sat" placeholder="जैसे: 8:00 – 12:30"/>
+    <label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">रविवार</label>
+    <input class="modal-input" type="text" id="t-sun" placeholder="जैसे: Holiday"/>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeTimingModal()">Cancel</button>
+      <button class="btn-save" onclick="saveTiming()">Save ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOCATION MODAL -->
+<div class="modal-ov" id="locModal">
+  <div class="modal-box wide">
+    <h3>📍 Location Edit करें</h3>
+    <p>विद्यालय का पता और Google Maps लिंक अपडेट करें।</p>
+    <label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">ग्राम / मोहल्ला</label>
+    <input class="modal-input" type="text" id="loc-inp-village" placeholder="जैसे: सहजनी पूरे गिरवर"/>
+    <label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">ज़िला / राज्य</label>
+    <input class="modal-input" type="text" id="loc-inp-district" placeholder="जैसे: सुल्तानपुर, उत्तर प्रदेश"/>
+    <label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">पिन कोड</label>
+    <input class="modal-input" type="text" id="loc-inp-pin" placeholder="जैसे: 228001"/>
+    <label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">Google Maps Embed URL <span style="font-weight:400;color:var(--muted)">(iframe src)</span></label>
+    <input class="modal-input" type="url" id="loc-inp-map" placeholder="https://maps.google.com/maps?q=...&output=embed"/>
+    <div style="background:#F0F9FF;border:1px solid #BAE6FD;border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:12px;color:#0369A1;line-height:1.6">
+      💡 <b>Maps URL kaise paayen:</b> Google Maps पर school search करें → Share → Embed a map → HTML copy करें → उसमें से सिर्फ <code>src="..."</code> वाला URL यहाँ डालें।
+    </div>
+    <label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">Google Maps Direct Link <span style="font-weight:400;color:var(--muted)">(Directions button)</span></label>
+    <input class="modal-input" type="url" id="loc-inp-link" placeholder="https://maps.google.com/?q=..."/>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeLocModal()">Cancel</button>
+      <button class="btn-save" onclick="saveLoc()">Save ✓</button>
+    </div>
+  </div>
+</div>
 
 <!-- LOGIN MODAL -->
 <div class="modal-ov" id="loginModal">
@@ -866,7 +1056,7 @@ footer{background:#040D1A}
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── CONSTANTS ──
 var PASS = 'Admin8787';
 var STORE_KEY = 'rs_school_data';
@@ -883,7 +1073,15 @@ var defaultData = {
   ],
   photos: [],
   staffPhotos: {s1:'',s2:'',s3:'',prin:''},
-  social: {fb:'',yt:'',wa:'',ig:''}
+  social: {fb:'',yt:'',wa:'',ig:''},
+  holidays: [
+    {date:'14 अप्रैल', name:'डॉ. आम्बेडकर जयन्ती'},
+    {date:'1 मई', name:'मजदूर दिवस'},
+    {date:'23 मई', name:'बुद्ध पूर्णिमा'},
+    {date:'जून–जुलाई', name:'ग्रीष्मकालीन अवकाश'}
+  ],
+  timing: {mf:'8:00 – 2:30', sat:'8:00 – 12:30', sun:'Holiday'},
+  location: {village:'सहजनी पूरे गिरवर', district:'सुल्तानपुर, उत्तर प्रदेश', pin:'228001', mapUrl:'https://maps.google.com/maps?q=Sahijani+Pure+Girwar+Sultanpur+UP&output=embed&z=14', mapLink:'https://maps.google.com/?q=Sahijani+Pure+Girwar+Sultanpur+UP'}
 };
 
 // ── LOAD / SAVE ──
@@ -901,9 +1099,12 @@ var DATA = loadData();
 // ── INIT ──
 window.onload = function(){
   renderNotices();
+  renderHolidays();
   renderGallery();
   loadStaffPhotos();
   loadSocialLinks();
+  loadTiming();
+  loadLocation();
   setupNav();
   setupReveal();
   setupAdminTrigger();
@@ -968,8 +1169,14 @@ function enableAdminMode(){
   document.getElementById('prinWrap').onclick = function(){ document.getElementById('prin-file').click(); };
   // Social edit btn
   document.querySelector('.sm-edit-btn').classList.add('admin-show');
+  var heb=document.getElementById('holidayEditBtn');if(heb)heb.classList.add('admin-show');
   // Notice edit btns
   document.querySelectorAll('.nb-edit-btn').forEach(function(b){ b.classList.add('admin-show'); });
+  // Timing edit btn
+  document.getElementById('timingEditBtn').classList.add('admin-show');
+  // Location edit btns
+  document.getElementById('locEditBtn').style.display = 'inline-flex';
+  document.getElementById('mapEditBtn').classList.add('admin-show');
 }
 function disableAdminMode(){
   document.getElementById('adminBar').classList.remove('visible');
@@ -983,8 +1190,76 @@ function disableAdminMode(){
   document.getElementById('prinWrap').style.cursor = 'default';
   document.getElementById('prinWrap').onclick = null;
   document.querySelector('.sm-edit-btn').classList.remove('admin-show');
+  var heb=document.getElementById('holidayEditBtn');if(heb)heb.classList.remove('admin-show');
   document.querySelectorAll('.nb-edit-btn').forEach(function(b){ b.classList.remove('admin-show'); });
+  document.getElementById('timingEditBtn').classList.remove('admin-show');
+  document.getElementById('locEditBtn').style.display = 'none';
+  document.getElementById('mapEditBtn').classList.remove('admin-show');
 }
+
+// ── SCHOOL TIMING ──
+function loadTiming(){
+  if(!DATA.timing) DATA.timing = {mf:'8:00 – 2:30', sat:'8:00 – 12:30', sun:'Holiday'};
+  document.getElementById('timing-mf').textContent = DATA.timing.mf;
+  document.getElementById('timing-sat').textContent = DATA.timing.sat;
+  var sunEl = document.getElementById('timing-sun');
+  sunEl.textContent = DATA.timing.sun;
+  sunEl.style.color = DATA.timing.sun.toLowerCase().includes('holiday') ? '#DC2626' : 'var(--navy)';
+}
+function openTimingModal(){
+  if(!DATA.timing) DATA.timing = {mf:'8:00 – 2:30', sat:'8:00 – 12:30', sun:'Holiday'};
+  document.getElementById('t-mf').value = DATA.timing.mf;
+  document.getElementById('t-sat').value = DATA.timing.sat;
+  document.getElementById('t-sun').value = DATA.timing.sun;
+  document.getElementById('timingModal').classList.add('open');
+}
+function closeTimingModal(){ document.getElementById('timingModal').classList.remove('open'); }
+function saveTiming(){
+  var mf = document.getElementById('t-mf').value.trim();
+  var sat = document.getElementById('t-sat').value.trim();
+  var sun = document.getElementById('t-sun').value.trim();
+  if(!mf||!sat||!sun){ alert('सभी fields भरें।'); return; }
+  DATA.timing = {mf:mf, sat:sat, sun:sun};
+  saveData(DATA);
+  loadTiming();
+  closeTimingModal();
+}
+document.getElementById('timingModal').addEventListener('click',function(e){if(e.target===this)closeTimingModal();});
+
+// ── LOCATION ──
+function loadLocation(){
+  if(!DATA.location) DATA.location = {village:'सहजनी पूरे गिरवर', district:'सुल्तानपुर, उत्तर प्रदेश', pin:'228001', mapUrl:'https://maps.google.com/maps?q=Sahijani+Pure+Girwar+Sultanpur+UP&output=embed&z=14', mapLink:'https://maps.google.com/?q=Sahijani+Pure+Girwar+Sultanpur+UP'};
+  var l = DATA.location;
+  document.getElementById('loc-village').textContent = l.village || 'सहजनी पूरे गिरवर';
+  document.getElementById('loc-district').textContent = l.district || 'सुल्तानपुर, उत्तर प्रदेश';
+  document.getElementById('loc-pin').textContent = l.pin || '228001';
+  var frame = document.getElementById('mapFrame');
+  if(l.mapUrl && l.mapUrl !== frame.src) { frame.style.opacity = 0; frame.src = l.mapUrl; }
+  if(l.mapLink) document.getElementById('loc-map-link').href = l.mapLink;
+}
+function openLocModal(){
+  if(!DATA.location) DATA.location = {};
+  document.getElementById('loc-inp-village').value = DATA.location.village||'';
+  document.getElementById('loc-inp-district').value = DATA.location.district||'';
+  document.getElementById('loc-inp-pin').value = DATA.location.pin||'';
+  document.getElementById('loc-inp-map').value = DATA.location.mapUrl||'';
+  document.getElementById('loc-inp-link').value = DATA.location.mapLink||'';
+  document.getElementById('locModal').classList.add('open');
+}
+function closeLocModal(){ document.getElementById('locModal').classList.remove('open'); }
+function saveLoc(){
+  DATA.location = {
+    village: document.getElementById('loc-inp-village').value.trim()||DATA.location.village,
+    district: document.getElementById('loc-inp-district').value.trim()||DATA.location.district,
+    pin: document.getElementById('loc-inp-pin').value.trim()||DATA.location.pin,
+    mapUrl: document.getElementById('loc-inp-map').value.trim()||DATA.location.mapUrl,
+    mapLink: document.getElementById('loc-inp-link').value.trim()||DATA.location.mapLink
+  };
+  saveData(DATA);
+  loadLocation();
+  closeLocModal();
+}
+document.getElementById('locModal').addEventListener('click',function(e){if(e.target===this)closeLocModal();});
 
 // ── NOTICES ──
 function renderNotices(){
@@ -1158,6 +1433,69 @@ document.getElementById('smModal').addEventListener('click',function(e){if(e.tar
 document.getElementById('noticeModal').addEventListener('click',function(e){if(e.target===this)closeNoticeModal();});
 document.getElementById('loginModal').addEventListener('click',function(e){if(e.target===this)closeLogin();});
 
+
+// ── HOLIDAYS ──
+function renderHolidays(){
+  var body = document.getElementById('holidayBody');
+  if(!body) return;
+  body.innerHTML = '';
+  var list = DATA.holidays || [];
+  list.forEach(function(hl){
+    if(!hl.date && !hl.name) return;
+    var row = document.createElement('div');
+    row.className = 'h-row';
+    row.innerHTML = '<span class="h-dt">'+hl.date+'</span><span class="h-nm">'+hl.name+'</span>';
+    body.appendChild(row);
+  });
+}
+function openHolidayModal(){
+  var container = document.getElementById('holiday-rows');
+  container.innerHTML = '';
+  var list = DATA.holidays || [];
+  list.forEach(function(hl){ addHolidayRowFilled(hl.date, hl.name); });
+  if(!list.length) addHolidayRow();
+  document.getElementById('holidayModal').classList.add('open');
+}
+function closeHolidayModal(){ document.getElementById('holidayModal').classList.remove('open'); }
+function addHolidayRow(date, name){
+  addHolidayRowFilled(date||'', name||'');
+}
+function addHolidayRowFilled(date, name){
+  var container = document.getElementById('holiday-rows');
+  var wrap = document.createElement('div');
+  wrap.style.cssText = 'display:flex;gap:8px;margin-bottom:8px;align-items:center';
+  var inp1 = document.createElement('input');
+  inp1.className = 'modal-input h-date-inp';
+  inp1.placeholder = 'दिनांक (जैसे: 14 अप्रैल)';
+  inp1.value = date;
+  inp1.style.marginBottom = '0';
+  var inp2 = document.createElement('input');
+  inp2.className = 'modal-input h-name-inp';
+  inp2.placeholder = 'छुट्टी का नाम';
+  inp2.value = name;
+  inp2.style.marginBottom = '0';
+  var del = document.createElement('button');
+  del.textContent = '✕';
+  del.style.cssText = 'background:#FEE2E2;border:none;color:#DC2626;width:32px;height:32px;border-radius:6px;cursor:pointer;flex-shrink:0;font-size:14px';
+  del.onclick = function(){ container.removeChild(wrap); };
+  wrap.appendChild(inp1); wrap.appendChild(inp2); wrap.appendChild(del);
+  container.appendChild(wrap);
+}
+function saveHolidays(){
+  var dates = document.querySelectorAll('.h-date-inp');
+  var names = document.querySelectorAll('.h-name-inp');
+  var list = [];
+  dates.forEach(function(d, i){
+    var dt = d.value.trim(); var nm = names[i].value.trim();
+    if(dt || nm) list.push({date:dt, name:nm});
+  });
+  DATA.holidays = list;
+  saveData(DATA);
+  renderHolidays();
+  closeHolidayModal();
+}
+document.getElementById('holidayModal').addEventListener('click',function(e){if(e.target===this)closeHolidayModal();});
+
 // ── NAV ──
 function setupNav(){
   document.getElementById('ham').addEventListener('click',function(){ document.getElementById('navLinks').classList.toggle('open'); });
@@ -1166,19 +1504,4 @@ function setupNav(){
     var pos = window.scrollY+120;
     document.querySelectorAll('section[id],div[id]').forEach(function(s){
       if(pos>=s.offsetTop&&pos<s.offsetTop+s.offsetHeight){
-        document.querySelectorAll('.nav-links a').forEach(function(a){a.classList.remove('active');});
-        var l=document.querySelector('.nav-links a[href="#'+s.id+'"]');
-        if(l)l.classList.add('active');
-      }
-    });
-  },{passive:true});
-}
-
-// ── REVEAL ──
-function setupReveal(){
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}});},{threshold:0.08});
-  document.querySelectorAll('.reveal').forEach(function(r){io.observe(r);});
-}
-</script>
-</body>
-</html>
+        document.querySelectorAll('.nav-links a').forEach(function(a){a.classList.remove('active'
