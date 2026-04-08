@@ -941,6 +941,9 @@ footer{background:#040D1A}
   </div>
   <div class="foot-bottom">
     <div class="foot-copy">© 2026 आर.एस. पब्लिक स्कूल, सहजनी पूरे गिरवर &nbsp;|&nbsp; Principal: Sh. Dinesh Kumar Patel &nbsp;|&nbsp; Est. 2019<br>"Future Starts Here — उज्ज्वल भविष्य की शुरुआत"</div>
+    <div style="margin-top:8px">
+      <a href="#" id="secretAdminBtn" style="color:rgba(255,255,255,0.08);font-size:10px;text-decoration:none;letter-spacing:1px;font-family:monospace" title="Admin">⚙ v2.0</a>
+    </div>
   </div>
 </footer>
 
@@ -1113,16 +1116,26 @@ window.onload = function(){
 // ── ADMIN LOGIN ──
 var logoClickCount = 0, logoClickTimer = null;
 function setupAdminTrigger(){
-  // Triple-click on logo text opens login
-  document.getElementById('logoLink').addEventListener('click', function(e){
-    logoClickCount++;
-    clearTimeout(logoClickTimer);
-    logoClickTimer = setTimeout(function(){ logoClickCount = 0; }, 600);
-    if(logoClickCount >= 3){
-      e.preventDefault();
-      logoClickCount = 0;
-      openLogin();
-    }
+  // Method 1: Triple-click on logo
+  var logoEl = document.getElementById('logoLink');
+  if(logoEl){
+    logoEl.addEventListener('click', function(e){
+      logoClickCount++;
+      clearTimeout(logoClickTimer);
+      logoClickTimer = setTimeout(function(){ logoClickCount = 0; }, 800);
+      if(logoClickCount >= 3){
+        e.preventDefault();
+        logoClickCount = 0;
+        openLogin();
+      }
+    });
+  }
+  // Method 2: Secret footer button click
+  var secBtn = document.getElementById('secretAdminBtn');
+  if(secBtn){ secBtn.addEventListener('click', function(e){ e.preventDefault(); openLogin(); }); }
+  // Method 3: Keyboard shortcut Ctrl+Shift+A
+  document.addEventListener('keydown', function(e){
+    if(e.ctrlKey && e.shiftKey && e.key === 'A'){ e.preventDefault(); openLogin(); }
   });
 }
 function openLogin(){
@@ -1154,47 +1167,41 @@ function adminLogout(){
 }
 
 function enableAdminMode(){
-  document.getElementById('adminBar').classList.add('visible');
-  // Gallery
-  var btn = document.getElementById('galUploadBtn');
-  btn.disabled = false;
-  btn.textContent = '📷 Upload Photos';
-  document.getElementById('galHint').textContent = '💡 Select multiple photos at once • Click to view full size';
-  document.querySelectorAll('.gi-ph').forEach(function(p){ p.classList.add('admin-clickable'); p.onclick = function(){ document.getElementById('galInput').click(); }; });
-  document.querySelectorAll('.gi-del').forEach(function(d){ d.classList.add('admin-show'); });
-  // Staff
-  document.querySelectorAll('.sc-photo-area').forEach(function(a){ a.classList.add('admin-mode'); });
-  // Principal
-  document.getElementById('prinWrap').style.cursor = 'pointer';
-  document.getElementById('prinWrap').onclick = function(){ document.getElementById('prin-file').click(); };
-  // Social edit btn
-  document.querySelector('.sm-edit-btn').classList.add('admin-show');
-  var heb=document.getElementById('holidayEditBtn');if(heb)heb.classList.add('admin-show');
-  // Notice edit btns
-  document.querySelectorAll('.nb-edit-btn').forEach(function(b){ b.classList.add('admin-show'); });
-  // Timing edit btn
-  document.getElementById('timingEditBtn').classList.add('admin-show');
-  // Location edit btns
-  document.getElementById('locEditBtn').style.display = 'inline-flex';
-  document.getElementById('mapEditBtn').classList.add('admin-show');
+  function el(id){ return document.getElementById(id); }
+  function qs(sel){ return document.querySelector(sel); }
+  function qsa(sel){ return document.querySelectorAll(sel); }
+  if(el('adminBar')) el('adminBar').classList.add('visible');
+  var btn = el('galUploadBtn');
+  if(btn){ btn.disabled=false; btn.textContent='📷 Upload Photos'; }
+  if(el('galHint')) el('galHint').textContent='💡 Kai photos ek saath chunein • Click karke badi dekhen';
+  qsa('.gi-ph').forEach(function(p){ p.classList.add('admin-clickable'); p.onclick=function(){ var gi=el('galInput'); if(gi) gi.click(); }; });
+  qsa('.gi-del').forEach(function(d){ d.classList.add('admin-show'); });
+  qsa('.sc-photo-area').forEach(function(a){ a.classList.add('admin-mode'); });
+  var pw=el('prinWrap'); if(pw){ pw.style.cursor='pointer'; pw.onclick=function(){ var pf=el('prin-file'); if(pf) pf.click(); }; }
+  var smb=qs('.sm-edit-btn'); if(smb) smb.classList.add('admin-show');
+  var heb=el('holidayEditBtn'); if(heb) heb.classList.add('admin-show');
+  qsa('.nb-edit-btn').forEach(function(b){ b.classList.add('admin-show'); });
+  var teb=el('timingEditBtn'); if(teb) teb.classList.add('admin-show');
+  var leb=el('locEditBtn'); if(leb) leb.style.display='inline-flex';
+  var meb=el('mapEditBtn'); if(meb) meb.classList.add('admin-show');
 }
 function disableAdminMode(){
-  document.getElementById('adminBar').classList.remove('visible');
-  var btn = document.getElementById('galUploadBtn');
-  btn.disabled = true;
-  btn.textContent = '🔒 Login to Upload';
-  document.getElementById('galHint').textContent = '🔒 Sirf Admin photos upload kar sakta hai';
-  document.querySelectorAll('.gi-ph').forEach(function(p){ p.classList.remove('admin-clickable'); p.onclick = null; });
-  document.querySelectorAll('.gi-del').forEach(function(d){ d.classList.remove('admin-show'); });
-  document.querySelectorAll('.sc-photo-area').forEach(function(a){ a.classList.remove('admin-mode'); });
-  document.getElementById('prinWrap').style.cursor = 'default';
-  document.getElementById('prinWrap').onclick = null;
-  document.querySelector('.sm-edit-btn').classList.remove('admin-show');
-  var heb=document.getElementById('holidayEditBtn');if(heb)heb.classList.remove('admin-show');
-  document.querySelectorAll('.nb-edit-btn').forEach(function(b){ b.classList.remove('admin-show'); });
-  document.getElementById('timingEditBtn').classList.remove('admin-show');
-  document.getElementById('locEditBtn').style.display = 'none';
-  document.getElementById('mapEditBtn').classList.remove('admin-show');
+  function el(id){ return document.getElementById(id); }
+  function qs(sel){ return document.querySelector(sel); }
+  function qsa(sel){ return document.querySelectorAll(sel); }
+  if(el('adminBar')) el('adminBar').classList.remove('visible');
+  var btn=el('galUploadBtn'); if(btn){ btn.disabled=true; btn.textContent='🔒 Login to Upload'; }
+  if(el('galHint')) el('galHint').textContent='🔒 Sirf Admin photos upload kar sakta hai';
+  qsa('.gi-ph').forEach(function(p){ p.classList.remove('admin-clickable'); p.onclick=null; });
+  qsa('.gi-del').forEach(function(d){ d.classList.remove('admin-show'); });
+  qsa('.sc-photo-area').forEach(function(a){ a.classList.remove('admin-mode'); });
+  var pw=el('prinWrap'); if(pw){ pw.style.cursor='default'; pw.onclick=null; }
+  var smb=qs('.sm-edit-btn'); if(smb) smb.classList.remove('admin-show');
+  var heb=el('holidayEditBtn'); if(heb) heb.classList.remove('admin-show');
+  qsa('.nb-edit-btn').forEach(function(b){ b.classList.remove('admin-show'); });
+  var teb=el('timingEditBtn'); if(teb) teb.classList.remove('admin-show');
+  var leb=el('locEditBtn'); if(leb) leb.style.display='none';
+  var meb=el('mapEditBtn'); if(meb) meb.classList.remove('admin-show');
 }
 
 // ── SCHOOL TIMING ──
