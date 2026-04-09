@@ -475,9 +475,11 @@ footer{background:#040D1A}
       <li><a href="#gallery">Gallery</a></li>
       <li><a href="#staff">Leadership</a></li>
       <li><a href="#contact" class="nav-admit">Admission</a></li>
-      <li><a href="javascript:void(0)" class="nav-admit" onclick="openAdmissionForm()" style="background:var(--gold)!important;color:var(--navy3)!important;margin-left:4px">📋 Form</a></li>
     </ul>
-    <button class="nav-admin-btn" id="navAdminBtn" onclick="openLogin()">⚙️ Admin Login</button>
+    <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+      <button onclick="openAdmissionForm()" style="background:var(--gold);color:var(--navy3);border:none;padding:9px 20px;border-radius:7px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;transition:all .2s" onmouseover="this.style.background='#E8B84B'" onmouseout="this.style.background='var(--gold)'">📋 Form</button>
+      <button id="navAdminBtn" onclick="openLogin()" style="background:rgba(124,58,237,.12);color:#7C3AED;border:1.5px solid rgba(124,58,237,.35);padding:9px 16px;border-radius:7px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;transition:all .2s" onmouseover="this.style.background='rgba(124,58,237,.22)'" onmouseout="this.style.background='rgba(124,58,237,.12)'">⚙️ Admin Login</button>
+    </div>
     <button class="hamburger" id="ham"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -1039,7 +1041,7 @@ footer{background:#040D1A}
 </div>
 
 <!-- ADMISSION FORM MODAL -->
-<div id="admissionModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:10000;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto">
+<div id="admissionModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:99998;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto">
   <div style="background:#fff;width:100%;max-width:780px;margin:0 auto;border-radius:8px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4)">
     <!-- Top action bar -->
     <div style="background:#0F2557;padding:10px 20px;display:flex;align-items:center;justify-content:space-between">
@@ -1230,7 +1232,7 @@ footer{background:#040D1A}
 </style>
 
 <!-- LOGIN MODAL -->
-<div class="modal-ov" id="loginModal">
+<div id="loginModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:99999;align-items:center;justify-content:center">
   <div class="modal-box login-box">
     <h3>🔐 Admin Login</h3>
     <p>Website edit karne ke liye Admin password enter karein.</p>
@@ -1348,17 +1350,15 @@ function setupAdminTrigger(){
 function openLogin(){
   var modal = document.getElementById('loginModal');
   var pw = document.getElementById('pwInput');
+  if(!modal){ console.error('loginModal not found'); return; }
+  modal.style.cssText = 'display:flex!important;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:99999;align-items:center;justify-content:center';
+  if(pw){ pw.value=''; setTimeout(function(){ try{pw.focus();}catch(e){} },200); }
   var err = document.getElementById('loginErr');
-  if(!modal || !pw){ alert('Login form load nahi hua. Page refresh karein.'); return; }
-  pw.value = '';
-  if(err) err.style.display = 'none';
-  modal.classList.add('open');
-  modal.style.display = 'flex';
-  setTimeout(function(){ try{ pw.focus(); }catch(e){} }, 150);
+  if(err) err.style.display='none';
 }
 function closeLogin(){
   var modal = document.getElementById('loginModal');
-  if(modal){ modal.classList.remove('open'); modal.style.display = ''; }
+  if(modal) modal.style.cssText = 'display:none';
 }
 function togglePw(){
   var inp = document.getElementById('pwInput');
@@ -1422,11 +1422,14 @@ function disableAdminMode(){
 // ── ADMISSION FORM ──
 function openAdmissionForm(){
   var m = document.getElementById('admissionModal');
-  if(m){ m.style.display='flex'; document.body.style.overflow='hidden'; }
+  if(!m){ console.error('admissionModal not found'); return; }
+  m.style.cssText = 'display:flex!important;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:99998;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto';
+  document.body.style.overflow='hidden';
 }
 function closeAdmissionForm(){
   var m = document.getElementById('admissionModal');
-  if(m){ m.style.display='none'; document.body.style.overflow=''; }
+  if(m) m.style.cssText = 'display:none';
+  document.body.style.overflow='';
 }
 function printAdmissionForm(){
   var printArea = document.getElementById('admPrintArea');
@@ -1445,10 +1448,9 @@ function printAdmissionForm(){
   win.focus();
   setTimeout(function(){ win.print(); }, 600);
 }
-// Close admission modal on background click
-document.getElementById('admissionModal').addEventListener('click', function(e){
-  if(e.target === this) closeAdmissionForm();
-});
+// Close modals on background click
+document.getElementById('loginModal').onclick = function(e){ if(e.target===this) closeLogin(); };
+document.getElementById('admissionModal').onclick = function(e){ if(e.target===this) closeAdmissionForm(); };
 function loadTiming(){
   if(!DATA.timing) DATA.timing = {mf:'8:00 – 2:30', sat:'8:00 – 12:30', sun:'Holiday'};
   document.getElementById('timing-mf').textContent = DATA.timing.mf;
@@ -1682,7 +1684,7 @@ function saveSM(){
 }
 document.getElementById('smModal').addEventListener('click',function(e){if(e.target===this)closeSMModal();});
 document.getElementById('noticeModal').addEventListener('click',function(e){if(e.target===this)closeNoticeModal();});
-document.getElementById('loginModal').addEventListener('click',function(e){if(e.target===this)closeLogin();});
+// (login modal close handled above)
 
 
 // ── HOLIDAYS ──
